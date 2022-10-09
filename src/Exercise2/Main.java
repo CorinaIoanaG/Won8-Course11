@@ -8,16 +8,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         persons.add(new Person("Ana", 38, "brown"));
-        persons.add(new Person("Andrei", 28, "dark"));
-        persons.add(new Person("Diana", 37, "blonde"));
+        persons.add(new Person("Andrei", 33, "dark"));
+        persons.add(new Person("Diana", 28, "blonde"));
         persons.add(new Person("Raluca", 33, "brown"));
         persons.add(new Person("Radu", 28, "dark"));
         persons.add(new Person("Tudor", 25, "brown"));
         persons.add(new Person("Alina", 38, "blonde"));
         //2.1
-        for (Person person : persons) {
-            System.out.printf("%s ", person.name());
-        }
+        System.out.printf(personsName().toString());
         System.out.println();
         //2.2
         Map<String, Integer> personsNameAge = new HashMap<>();
@@ -30,7 +28,19 @@ public class Main {
         System.out.println(personsOlderThan(scanner.nextInt()));
         //2.4
         System.out.println(personsGroupedByHairColour());
+        //2.5
+        System.out.println(personsGroupedByAge());
 
+    }
+
+    private static List<String> personsName() {
+        List<String> result = new ArrayList<>();
+        if (persons.size() > 0) {
+            for (Person person : persons) {
+                result.add(person.name());
+            }
+        }
+        return result;
     }
 
     private static List<Person> personsOlderThan(Integer minAge) {
@@ -52,6 +62,20 @@ public class Main {
                 if (!result.containsKey(person.hairColour())) {
                     result.put(person.hairColour(), new ArrayList<>());
                 }
+                result.get(person.hairColour()).add(person.name());
+            }
+        }
+        return result;
+    }
+
+    private static Map<Integer, List<String>> personsGroupedByAge() {
+        Map<Integer, List<String>> result = new HashMap<>();
+        if (persons.size() > 0) {
+            for (Person person : persons) {
+                if (!result.containsKey(person.age())) {
+                    result.put(person.age(), new ArrayList<>());
+                }
+                result.get(person.age()).add(person.name());
             }
         }
         return result;
